@@ -52,9 +52,9 @@ class PopularPosts extends Plugin
 
 			// Only track users that aren't logged in, unless specifically overridden
 			if ( !User::identify()->loggedin || Options::get('popular_posts__loggedintoo') ) {
-				$set = Session::get_set('popular_posts', true);
+				$set = Session::get_set('popular_posts', false);
 				$post = $theme->post;
-				if ( !isset($set['viewed'][$post->id]) ){
+				if ( !in_array($post->id, $set) ){
 					$views = $post->info->views;
 					if ( $views == null ) {
 						$views = 0;
@@ -62,8 +62,9 @@ class PopularPosts extends Plugin
 					$views += 1;
 					$post->info->views = $views;
 					$post->info->commit();
+
+					Session::add_to_set( 'popular_posts', $post->id );
 				}
-				Session::add_to_set( 'popular_posts', array( $post->id => true), 'viewed' );
 			}
 
 		}
@@ -74,7 +75,7 @@ class PopularPosts extends Plugin
 	 */
 	public function theme_popular_posts($theme, $limit = 5)
 	{
-		$theme->popular_posts = posts::get(array(
+		$theme->popular_posts = Posts::get(array(
 			'content_type' => 'entry',
 			'has:info' => 'views',
 			'orderby' => 'info_views_value DESC',
