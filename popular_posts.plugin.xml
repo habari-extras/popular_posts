@@ -4,11 +4,17 @@
 	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Software License 2.0</license>
 	<author url="http://habariproject.org/">The Habari Community</author>
 	<url>http://habariproject.org/</url>
-	<version>0.1</version>
+	<version>0.2</version>
 	<description><![CDATA[Track views of individual entries, and allow the display of most the frequently accessed entries.]]></description>
 	<copyright>2009</copyright>
 	<help>
-		<value><![CDATA[<p>To output a list of popular posts, insert this code where you want them to appear:</p>
+		<value><![CDATA[<p>Once activated, this plugin stores and updates a view count for individual posts,
+and can be configured to count only users who are not logged in.</p>
+<p>It provides a block that can be configured with the number of posts to show.
+Its template, <tt>block.popular_posts.php</tt>, can be copied to a theme directory and modified.</p>
+<hr>
+<p><strong>This plugin can also be used without using the block, as below:</strong></p>
+<p>To output a list of popular posts, insert this code where you want them to appear:</p>
 <blockquote><code>&lt;?php $theme-&gt;popular_posts(); ?&gt;</code></blockquote>
 <p>You can also pass the number of popular posts you want to retrieve:</p>
 <blockquote><code>&lt;?php $theme-&gt;popular_posts( 7 ); ?&gt;</code></blockquote>

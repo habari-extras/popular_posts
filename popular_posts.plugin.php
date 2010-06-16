@@ -9,7 +9,18 @@ class PopularPosts extends Plugin
 	public function action_init()
 	{
 		$this->add_template( 'popular_posts', dirname(__FILE__) . '/popular_posts.php' );
+		$this->add_template( 'block.popular_posts', dirname(__FILE__) . '/block.popular_posts.php' );
 
+	}
+
+	/**
+	 * Add to the list of possible block types.
+	 *
+ 	 **/
+	public function filter_block_list( $block_list )
+	{
+		$block_list[ 'popular_posts' ] = _t( 'Popular Posts', 'popular_posts' );
+		return $block_list;
 	}
 
 	/**
@@ -22,6 +33,15 @@ class PopularPosts extends Plugin
 		$form->append( 'checkbox', 'loggedintoo', 'popular_posts__loggedintoo', _t( 'Track views of logged-in users too', 'popular_posts' ) );
 		$form->append( 'submit', 'save', 'Save' );
 		$form->out();
+	}
+
+	/**
+	 * Create a configuration form for the block
+	 **/
+	public function action_block_form_popular_posts( $form, $block )
+	{
+		$content = $form->append( 'text', 'quantity', $block, _t( 'Posts to show:', 'popular_posts' ) );
+		$form->append( 'submit', 'save', _t( 'Save', 'popular_posts' ) );
 	}
 
 	/**
@@ -58,14 +78,32 @@ class PopularPosts extends Plugin
 	 */
 	public function theme_popular_posts($theme, $limit = 5)
 	{
-		$theme->popular_posts = Posts::get(array(
+		$theme->popular_posts = Posts::get( array(
 			'content_type' => 'entry',
 			'has:info' => 'views',
 			'orderby' => 'ABS(info_views_value) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
 			'limit' => $limit
-		));
+		) );
 		return $theme->display( 'popular_posts' );
 	}
+
+	/**
+	 * Populate a block with the popular entries
+	 **/
+	public function action_block_content_popular_posts( $block, $theme )
+	{
+		if ( ! $limit = $block->quantity ) {
+			$limit = 5;
+		};
+
+		$block->popular_posts = Posts::get( array(
+			'content_type' => 'entry',
+			'has:info' => 'views',
+			'orderby' => 'ABS(info_views_value) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
+			'limit' => $limit
+		) );
+	}
+
 
 	/**
 	 * Add update beacon support
