@@ -7,5 +7,15 @@
 	<version>0.1</version>
 	<description><![CDATA[Track views of individual entries, and allow the display of most the frequently accessed entries.]]></description>
 	<copyright>2009</copyright>
+	<help>
+		<value><![CDATA[<p>To output a list of popular posts, insert this code where you want them to appear:</p>
+<blockquote><code>&lt;?php $theme-&gt;popular_posts(); ?&gt;</code></blockquote>
+<p>You can also pass the number of popular posts you want to retrieve:</p>
+<blockquote><code>&lt;?php $theme-&gt;popular_posts( 7 ); ?&gt;</code></blockquote>
+<p>This will retrieve the seven most popular posts. The default is five.</p>
+<p>The default theme inserts an HTML unordered list of links to the popular
+pages. If you want to alter this, you should copy the <tt>popular_posts.php</tt>
+template included with this plugin to your current theme directory and make changes to it there.</p>]]></value>
+	</help>
 </pluggable>
  
