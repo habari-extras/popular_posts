@@ -104,15 +104,6 @@ class PopularPosts extends Plugin
 		) );
 	}
 
-
-	/**
-	 * Add update beacon support
-	 **/
-	public function action_update_check()
-	{
-		Update::add( 'PopularPosts', 'a52dad06-1b46-4832-93d7-2f9a7d783f54', $this->info->version );
-	}
-
 }
 
 ?>
