@@ -81,7 +81,7 @@ class PopularPosts extends Plugin
 		$theme->popular_posts = Posts::get( array(
 			'content_type' => 'entry',
 			'has:info' => 'views',
-			'orderby' => 'ABS(info_views_value) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
+			'orderby' => 'CAST(hipi1.value AS UNSIGNED) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
 			'limit' => $limit
 		) );
 		return $theme->display( 'popular_posts' );
@@ -99,7 +99,7 @@ class PopularPosts extends Plugin
 		$block->popular_posts = Posts::get( array(
 			'content_type' => 'entry',
 			'has:info' => 'views',
-			'orderby' => 'ABS(info_views_value) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
+			'orderby' => 'CAST(hipi1.value as UNSIGNED) DESC', // As the postinfo value column is TEXT, ABS() forces the sorting to be numeric
 			'limit' => $limit
 		) );
 	}
